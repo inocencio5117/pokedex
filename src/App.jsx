@@ -1,9 +1,10 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+/* eslint-disable no-shadow */
+import React, { useState } from 'react';
+import logo from './logo.svg';
+import './App.scss';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div className="App">
@@ -12,11 +13,14 @@ function App() {
         <p>Hello Vite + React!</p>
         <p>
           <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
+            count is:
+            {count}
           </button>
         </p>
         <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
+          Edit
+          <code>App.jsx</code>
+          and save to test HMR updates.
         </p>
         <p>
           <a
@@ -39,7 +43,7 @@ function App() {
         </p>
       </header>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
