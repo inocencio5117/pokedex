@@ -1,15 +1,19 @@
-/* eslint-disable no-shadow */
 import React from 'react';
-import './App.scss';
-import { LoadingPokeball } from './components/LoadingPokeball';
+import { QueryClientProvider, QueryClient } from 'react-query';
+
 import { PokedexContainer } from './components/PokedexContainer';
+
 import './styles/global.scss';
+import './App.scss';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
     <div className="App">
-      <PokedexContainer />
-      <LoadingPokeball />
+      <QueryClientProvider client={queryClient}>
+        <PokedexContainer />
+      </QueryClientProvider>
     </div>
   );
 }

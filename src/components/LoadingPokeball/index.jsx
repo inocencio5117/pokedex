@@ -4,7 +4,7 @@ import './styles.scss';
 
 export function LoadingPokeball() {
   return (
-    <div className="container">
+    <div className="pokeball-container">
       <img
         className="bounce"
         src={pokeballImg}

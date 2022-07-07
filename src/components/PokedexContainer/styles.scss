@@ -41,4 +41,12 @@
       width: 17rem;
     }
   }
+
+  .pokemon-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    width: 100%;
+  }
 }
