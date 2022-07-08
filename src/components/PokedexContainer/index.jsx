@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react';
 
-import { useQuery } from 'react-query';
+import { useQueries } from 'react-query';
 import axios from 'axios';
 
 import { FaRandom } from 'react-icons/fa';
@@ -11,14 +11,24 @@ import { LoadingPokeball } from '../LoadingPokeball';
 import './styles.scss';
 
 export function PokedexContainer() {
-  async function fetchPokemons() {
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon');
-    return response.data;
-  }
+  const pokemonsPerPage = useQueries(
+    Array(20)
+      .fill()
+      .map((_, i) => ({
+        queryKey: ['pokemon', i],
+        queryFn: async () => {
+          const response = await axios.get(
+            `https://pokeapi.co/api/v2/pokemon/${i + 1}`,
+          );
+          return response.data;
+        },
+      })),
+  );
 
-  const { data, isLoading } = useQuery('pokemons', fetchPokemons);
+  console.log(pokemonsPerPage);
 
-  if (isLoading) return <LoadingPokeball />;
+  if (pokemonsPerPage[1].status === 'loading') return <LoadingPokeball />;
+  if (pokemonsPerPage.isError) return <LoadingPokeball />;
 
   return (
     <div className="pokedex-container">
@@ -37,8 +47,13 @@ export function PokedexContainer() {
         </select>
       </div>
       <div className="pokemon-list">
-        {data.results.map((pokemon) => (
-          <ListedPokemon pokeName={pokemon.name} key={pokemon.name} />
+        {pokemonsPerPage.map((pokemon) => (
+          <ListedPokemon
+            pokeName={pokemon.data.name}
+            pokeImg={pokemon.data.sprites.front_default}
+            pokeOrder={pokemon.data.order}
+            key={pokemon.data.name}
+          />
         ))}
       </div>
     </div>

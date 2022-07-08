@@ -52,6 +52,7 @@ body {
   background: url('../assets/Pokemon-wallpaper.png');
   background-position: inital;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   background-size: 100vw 100vh;
   color: var(--white);
   -webkit-font-smoothing: antialiased;

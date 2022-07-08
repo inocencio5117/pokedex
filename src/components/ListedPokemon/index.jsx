@@ -1,31 +1,25 @@
 import React from 'react';
 import './styles.scss';
 import PropTypes from 'prop-types';
-import axios from 'axios';
-import { useQuery } from 'react-query';
+import { capitalizeFirstLetter } from '../../utils/capitalize';
+import { zeroLeft } from '../../utils/zeroLeft';
 
-export function ListedPokemon({ pokeName }) {
-  async function fetchPokemon() {
-    const response = await axios.get(
-      `https://pokeapi.co/api/v2/pokemon/${pokeName}`,
-    );
-    return response.data;
-  }
-
-  const { data, isLoading } = useQuery('pokemon', fetchPokemon);
-
-  if (isLoading) return <div>Loading</div>;
-
+export function ListedPokemon({ pokeName, pokeImg, pokeOrder }) {
   return (
     <div className="pokemon-list-container">
-      <img src={data.sprites.front_default} alt={pokeName} />
+      <img src={pokeImg} alt={pokeName} height={150} width={150} />
 
-      <div>{data.order}</div>
-      <div>{pokeName}</div>
+      <span>
+        N°
+        {zeroLeft(pokeOrder)}
+      </span>
+      <h3>{capitalizeFirstLetter(pokeName)}</h3>
     </div>
   );
 }
 
 ListedPokemon.propTypes = {
   pokeName: PropTypes.string.isRequired,
+  pokeImg: PropTypes.string.isRequired,
+  pokeOrder: PropTypes.number.isRequired,
 };

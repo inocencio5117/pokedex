@@ -1,7 +1,16 @@
 .pokemon-list-container {
   margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 
   > img {
-    background-color: gray;
+    background-color: lightgray;
+    // height: 6.25rem;
+    // width: 6.25rem;
+  }
+
+  > span {
+    margin: 0.5rem 1rem 0rem;
   }
 }
