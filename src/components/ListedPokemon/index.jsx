@@ -13,7 +13,7 @@ export function ListedPokemon({ pokeName, pokeImg, pokeOrder }) {
         N°
         {zeroLeft(pokeOrder)}
       </span>
-      <h3>{capitalizeFirstLetter(pokeName)}</h3>
+      <span>{capitalizeFirstLetter(pokeName)}</span>
     </div>
   );
 }
