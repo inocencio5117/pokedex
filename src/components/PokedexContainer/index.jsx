@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useQueries, useQuery } from 'react-query';
 import axios from 'axios';
@@ -11,43 +11,46 @@ import { LoadingPokeball } from '../LoadingPokeball';
 import './styles.scss';
 
 export function PokedexContainer() {
-  const [page, setPage] = useState('https://pokeapi.co/api/v2/pokemon');
+  const [page, setPage] = useState(
+    'https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0',
+  );
+  const [loadedPokemons, setLoadedPokemons] = useState([]);
 
   async function fetchPokemons({ queryKey }) {
     const response = await axios.get(queryKey[1]);
     return response.data;
   }
 
-  const { data, isLoading, isFetching, loading, error, status, refetch } =
-    useQuery(['pokemon-list', page], fetchPokemons);
-
-  const cachedMutatedData = useMemo(
-    useCallback(() => {
-      if (loading || error) return null;
-
-      const pokemonNames = [];
-      data?.results.map((poke) => pokemonNames.push(poke.name));
-      return pokemonNames;
-    }, [loading, error, data]),
-    [page, data],
+  const { data, isLoading, isFetching, status } = useQuery(
+    ['pokemon-list', page],
+    fetchPokemons,
+    {
+      onSuccess: (response) => {
+        setLoadedPokemons(loadedPokemons.concat(response.results));
+      },
+      keepPreviousData: true,
+    },
   );
 
-  // console.log(cachedMutatedData);
-  console.log(page);
-
   const pokemonsPerPage = useQueries(
-    cachedMutatedData?.map((pokemon, i) => ({
+    loadedPokemons?.map((pokemon, i) => ({
       queryKey: ['pokemon', i],
       queryFn: async () => {
-        const response = await axios.get(
-          `https://pokeapi.co/api/v2/pokemon/${pokemon}`,
-        );
-        return response.data;
+        const response = await axios.get(`${pokemon.url}`);
+
+        return response;
       },
+      keepPreviousData: true,
     })),
   );
 
-  // console.log(pokemonsPerPage);
+  function handleClick(element) {
+    element.preventDefault();
+    setPage(data?.next);
+    window.scroll(0, document.body.scrollHeight);
+  }
+
+  console.log(loadedPokemons);
 
   if (isLoading || isFetching || status === 'loading') {
     return <LoadingPokeball />;
@@ -70,44 +73,24 @@ export function PokedexContainer() {
         </select>
       </div>
       <div className="pokemon-list">
-        {!pokemonsPerPage ? (
-          <p>Loading...</p>
-        ) : (
-          pokemonsPerPage.map((pokemon) => (
-            <ListedPokemon
-              pokeName={pokemon?.data?.name}
-              pokeOrder={pokemon?.data?.order}
-              pokeImg={pokemon?.data?.sprites?.front_default}
-              key={pokemon?.data?.name}
-            />
-          ))
-        )}
+        {pokemonsPerPage.map((pokemon, i) => (
+          <ListedPokemon
+            pokeName={pokemon?.data?.data?.name}
+            pokeOrder={pokemon?.data?.data.order}
+            pokeImg={pokemon?.data?.data.sprites?.front_default}
+            key={pokemon?.data?.data.name || i}
+          />
+        ))}
       </div>
 
       <div>
         <button
           type="button"
-          onClick={() => {
-            setPage(
-              data?.previous === null
-                ? 'https://pokeapi.co/api/v2/pokemon/ '
-                : data?.previous,
-            );
-            refetch();
-          }}
-          disabled={page === 'https://pokeapi.co/api/v2/pokemon/'}
-        >
-          Anterior
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            setPage(data?.next);
-            refetch();
-          }}
+          id="load-more"
+          onClick={handleClick}
           disabled={!data?.next}
         >
-          Next
+          Carregar mais
         </button>
       </div>
     </div>

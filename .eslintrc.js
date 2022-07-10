@@ -16,5 +16,6 @@ module.exports = {
   rules: {
     'import/prefer-default-export': 'off',
     'operator-linebreak': 'off',
+    'object-curly-newline': 'off',
   },
 };

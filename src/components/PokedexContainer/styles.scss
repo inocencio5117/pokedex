@@ -5,7 +5,7 @@
   margin: 3rem auto;
   padding: 1rem;
 
-  width: 70%;
+  width: 65rem;
   height: fit-content;
 
   border-radius: 1rem;
@@ -42,13 +42,47 @@
     }
   }
 
-  .pokemon-list {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    margin: 0 auto;
-
+  @media screen and (max-width: 1128px) {
     width: 80%;
+  }
+
+  @media screen and (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+
+    .search {
+      flex-direction: column;
+
+      button {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+
+  .pokemon-list {
+    // display: grid;
+    // grid-template-columns: repeat(5, 1fr);
+    // margin: 0 auto;
+    display: inline-grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 1rem;
+    justify-items: center;
+    align-items: center;
+
+    width: 100%;
 
     cursor: pointer;
+
+    @media screen and (max-width: 1500px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media screen and (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (max-width: 600px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 }
