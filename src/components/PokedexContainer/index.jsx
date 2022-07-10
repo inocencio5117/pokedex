@@ -1,16 +1,20 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 
+// import { useSelector, useDispatch } from 'react-redux';
 import { useQueries, useQuery } from 'react-query';
 import axios from 'axios';
 
 import { FaRandom } from 'react-icons/fa';
 import { ListedPokemon } from '../ListedPokemon';
 import { LoadingPokeball } from '../LoadingPokeball';
+// import { handleModal } from '../../features/modal/handleModal';
 
 import './styles.scss';
 
 export function PokedexContainer() {
+  // const modal = useSelector((state) => state.modal.isOpen);
+  // const dispatch = useDispatch();
   const [page, setPage] = useState(
     'https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0',
   );
@@ -47,7 +51,6 @@ export function PokedexContainer() {
   function handleClick(element) {
     element.preventDefault();
     setPage(data?.next);
-    window.scroll(0, document.body.scrollHeight);
   }
 
   console.log(loadedPokemons);
