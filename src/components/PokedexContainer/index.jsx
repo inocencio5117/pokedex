@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useQueries, useQuery } from 'react-query';
 import axios from 'axios';
@@ -14,6 +14,8 @@ export function PokedexContainer() {
     'https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0',
   );
   const [loadedPokemons, setLoadedPokemons] = useState([]);
+  const [searchInput, setSearchInput] = useState('');
+  const [searchedPokemons, setSearchedPokemons] = useState({});
 
   async function fetchPokemons({ queryKey }) {
     const response = await axios.get(queryKey[1]);
@@ -43,6 +45,25 @@ export function PokedexContainer() {
     })),
   );
 
+  function handleSearch(element) {
+    element.preventDefault();
+    setSearchInput(document.querySelector('#search').value);
+  }
+
+  useEffect(() => {
+    async function getData() {
+      const res = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon/${searchInput}`,
+      );
+
+      setSearchedPokemons({ ...res.data });
+      console.log(res.data);
+      console.log(searchedPokemons.name, 'pikachu deveria estar auqi');
+    }
+
+    getData();
+  }, [searchInput]);
+
   function handleLoadMore(element) {
     element.preventDefault();
     setPage(data?.next);
@@ -56,7 +77,11 @@ export function PokedexContainer() {
     <div className="pokedex-container">
       <h1 className="pokedex-title">Pokedex</h1>
       <div className="search">
-        <button type="button">
+        <input type="text" placeholder="Id ou nome do pokemon" id="search" />
+        <button type="button" className="" onClick={handleSearch}>
+          Search
+        </button>
+        <button type="button" className="surprise-button">
           <FaRandom />
           Surpreenda-me
         </button>
@@ -69,26 +94,38 @@ export function PokedexContainer() {
         </select>
       </div>
       <div className="pokemon-list">
-        {pokemonsPerPage.map((pokemon, i) => (
+        {searchInput !== '' ? (
           <ListedPokemon
-            pokeDetails={pokemon}
-            pokeName={pokemon?.data?.data?.name}
-            pokeOrder={pokemon?.data?.data.order}
-            pokeImg={pokemon?.data?.data.sprites?.front_default}
-            key={pokemon?.data?.data.name || i}
+            pokeDetails={searchedPokemons}
+            pokeName={searchedPokemons?.name}
+            pokeOrder={searchedPokemons?.order}
+            pokeImg={searchedPokemons?.sprites?.front_default}
+            key={searchedPokemons?.order}
           />
-        ))}
+        ) : (
+          pokemonsPerPage.map((pokemon, i) => (
+            <ListedPokemon
+              pokeDetails={pokemon?.data?.data}
+              pokeName={pokemon?.data?.data?.name}
+              pokeOrder={pokemon?.data?.data.order}
+              pokeImg={pokemon?.data?.data.sprites?.front_default}
+              key={pokemon?.data?.data.name || i}
+            />
+          ))
+        )}
       </div>
 
-      <div>
-        <button
-          type="button"
-          id="load-more"
-          onClick={handleLoadMore}
-          disabled={!data?.next}
-        >
-          Carregar mais
-        </button>
+      <div className="load-more-container">
+        {searchInput !== '' ? null : (
+          <button
+            type="button"
+            id="load-more-button"
+            onClick={(el) => handleLoadMore(el)}
+            disabled={!data?.next}
+          >
+            Carregar mais
+          </button>
+        )}
       </div>
     </div>
   );

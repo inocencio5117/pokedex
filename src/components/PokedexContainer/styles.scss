@@ -1,37 +1,44 @@
 .pokedex-container {
-  background-color: var(--white);
+  background-color: rgba(59, 130, 246, 0.5);
   color: #000;
 
   margin: 3rem auto;
   padding: 1rem;
 
+  min-width: fit-content;
   width: 65rem;
   height: fit-content;
 
   border-radius: 1rem;
+
+  .surprise-button,
+  #load-more-button {
+    background-color: navy;
+    color: #fff;
+    font-size: 1.2em;
+    padding: 0.75rem 0.5rem;
+    width: 15rem;
+    border-radius: 0.5rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    > svg {
+      margin-right: 1rem;
+    }
+  }
+
+  .load-more-container {
+    display: flex;
+    justify-content: center;
+  }
 
   .search {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     margin: 2rem 0rem 3rem;
-
-    > button {
-      background-color: navy;
-      color: #fff;
-      font-size: 1.2em;
-      padding: 0.75rem 0.5rem;
-      width: 15rem;
-      border-radius: 0.5rem;
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      > svg {
-        margin-right: 1rem;
-      }
-    }
 
     > select {
       color: #fff;
@@ -62,7 +69,6 @@
   .pokemon-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-gap: 1rem;
     justify-items: center;
     align-items: center;
 

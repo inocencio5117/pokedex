@@ -1,9 +1,12 @@
 .pokemon-list-container {
-  margin: 1rem;
+  margin: 0.75rem;
   display: flex;
   flex-direction: column;
   text-align: left;
   padding: 1rem;
+
+  border-radius: 1rem;
+  background-color: rgba(229, 231, 235, 1);
 
   cursor: pointer;
 
@@ -11,7 +14,6 @@
 
   &:hover {
     transform: scale(1.1);
-    background-color: rgba(102, 102, 102, 0.3);
   }
 
   > span {

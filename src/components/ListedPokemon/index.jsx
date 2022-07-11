@@ -19,7 +19,7 @@ export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
 
   function handlePokemonProfile(element, pokemon) {
     element.preventDefault();
-    dispatch(handlePokemonDetails(pokemon.data.data));
+    dispatch(handlePokemonDetails(pokemon));
     dispatch(handleModal());
   }
 
@@ -30,7 +30,7 @@ export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
       onClick={(el) => handlePokemonProfile(el, pokeDetails)}
       className="pokemon-list-container"
     >
-      <img src={pokeImg} alt={pokeName} height={150} width={150} />
+      <img src={pokeImg} alt={pokeName} height={200} width={200} />
 
       <span>
         N°
@@ -42,13 +42,14 @@ export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
 }
 
 ListedPokemon.defaultProps = {
+  pokeDetails: {},
   pokeName: '',
   pokeImg: '',
   pokeOrder: 0,
 };
 
 ListedPokemon.propTypes = {
-  pokeDetails: PropTypes.object.isRequired,
+  pokeDetails: PropTypes.object,
   pokeName: PropTypes.string,
   pokeImg: PropTypes.string,
   pokeOrder: PropTypes.number,

@@ -20,9 +20,13 @@ export function Modal() {
   if (!isModalOpen) return null;
 
   return (
-    <div className="modal-overlay">
+    <div key={`${pokemonDetails}_modal`} className="modal-overlay">
       <div className="modal-container">
-        <button type="button" className="" onClick={handleModalClose}>
+        <button
+          type="button"
+          className="modal-close-button"
+          onClick={handleModalClose}
+        >
           X
         </button>
         <div className="modal-header">
@@ -37,6 +41,8 @@ export function Modal() {
           <img
             src={pokemonDetails.sprites.front_default}
             alt={pokemonDetails.name}
+            height={250}
+            width={250}
           />
 
           <div className="modal-types">
@@ -46,15 +52,19 @@ export function Modal() {
           </div>
 
           <div className="modal-stats">
-            <span>Height</span>
-            <span>{pokemonDetails.height}</span>
-            <span>Weight</span>
-            <span>{pokemonDetails.weight}</span>
+            <span>
+              Height:
+              {pokemonDetails.height}
+            </span>
+            <span>
+              Weight
+              {pokemonDetails.weight}
+            </span>
             {pokemonDetails.stats.map((item) => (
-              <>
-                <span>{item.stat.name}</span>
-                <span>{item.base_stat}</span>
-              </>
+              <span>
+                {item.stat.name}
+                {item.base_stat}
+              </span>
             ))}
           </div>
         </div>
