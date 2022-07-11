@@ -1,7 +1,9 @@
+/* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   isOpen: false,
+  pokemonDetails: {},
 };
 
 export const modalSlice = createSlice({
@@ -9,12 +11,14 @@ export const modalSlice = createSlice({
   initialState,
   reducers: {
     handleModal: (state) => {
-      // eslint-disable-next-line no-param-reassign
       state.isOpen = !state.isOpen;
+    },
+    handlePokemonDetails: (state, action) => {
+      state.pokemonDetails = { ...action.payload };
     },
   },
 });
 
-export const { handleModal } = modalSlice.actions;
+export const { handleModal, handlePokemonDetails } = modalSlice.actions;
 
 export default modalSlice.reducer;

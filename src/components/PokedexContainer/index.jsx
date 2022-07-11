@@ -1,20 +1,15 @@
 /* eslint-disable no-console */
 import React, { useState } from 'react';
 
-// import { useSelector, useDispatch } from 'react-redux';
 import { useQueries, useQuery } from 'react-query';
 import axios from 'axios';
 
 import { FaRandom } from 'react-icons/fa';
 import { ListedPokemon } from '../ListedPokemon';
 import { LoadingPokeball } from '../LoadingPokeball';
-// import { handleModal } from '../../features/modal/handleModal';
-
 import './styles.scss';
 
 export function PokedexContainer() {
-  // const modal = useSelector((state) => state.modal.isOpen);
-  // const dispatch = useDispatch();
   const [page, setPage] = useState(
     'https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0',
   );
@@ -48,12 +43,10 @@ export function PokedexContainer() {
     })),
   );
 
-  function handleClick(element) {
+  function handleLoadMore(element) {
     element.preventDefault();
     setPage(data?.next);
   }
-
-  console.log(loadedPokemons);
 
   if (isLoading || isFetching || status === 'loading') {
     return <LoadingPokeball />;
@@ -78,6 +71,7 @@ export function PokedexContainer() {
       <div className="pokemon-list">
         {pokemonsPerPage.map((pokemon, i) => (
           <ListedPokemon
+            pokeDetails={pokemon}
             pokeName={pokemon?.data?.data?.name}
             pokeOrder={pokemon?.data?.data.order}
             pokeImg={pokemon?.data?.data.sprites?.front_default}
@@ -90,7 +84,7 @@ export function PokedexContainer() {
         <button
           type="button"
           id="load-more"
-          onClick={handleClick}
+          onClick={handleLoadMore}
           disabled={!data?.next}
         >
           Carregar mais

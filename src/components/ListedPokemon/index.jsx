@@ -1,14 +1,39 @@
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React from 'react';
 import './styles.scss';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
+
 import { capitalizeFirstLetter } from '../../utils/capitalize';
 import { zeroLeft } from '../../utils/zeroLeft';
 
-export function ListedPokemon({ pokeName, pokeImg, pokeOrder }) {
+import {
+  handleModal,
+  handlePokemonDetails,
+} from '../../features/modal/handleModal';
+
+export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
+  const isModalOpen = useSelector((state) => state.modal.isOpen);
+  const isPokemonDetails = useSelector((state) => state.modal.pokemonDetails);
+  const dispatch = useDispatch();
+
+  function handlePokemonProfile(element, pokemon) {
+    element.preventDefault();
+    dispatch(handlePokemonDetails(pokemon.data.data));
+    dispatch(handleModal());
+    console.log(pokemon.data.data);
+    console.log(isModalOpen, isPokemonDetails);
+  }
+
   if (!pokeName || !pokeImg || !pokeOrder) return <p>Loading...</p>;
 
   return (
-    <div className="pokemon-list-container">
+    <div
+      onClick={(el) => handlePokemonProfile(el, pokeDetails)}
+      className="pokemon-list-container"
+    >
       <img src={pokeImg} alt={pokeName} height={150} width={150} />
 
       <span>
@@ -27,6 +52,7 @@ ListedPokemon.defaultProps = {
 };
 
 ListedPokemon.propTypes = {
+  pokeDetails: PropTypes.object.isRequired,
   pokeName: PropTypes.string,
   pokeImg: PropTypes.string,
   pokeOrder: PropTypes.number,
