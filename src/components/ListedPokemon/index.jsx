@@ -4,7 +4,7 @@
 import React from 'react';
 import './styles.scss';
 import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { capitalizeFirstLetter } from '../../utils/capitalize';
 import { zeroLeft } from '../../utils/zeroLeft';
@@ -15,16 +15,12 @@ import {
 } from '../../features/modal/handleModal';
 
 export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
-  const isModalOpen = useSelector((state) => state.modal.isOpen);
-  const isPokemonDetails = useSelector((state) => state.modal.pokemonDetails);
   const dispatch = useDispatch();
 
   function handlePokemonProfile(element, pokemon) {
     element.preventDefault();
     dispatch(handlePokemonDetails(pokemon.data.data));
     dispatch(handleModal());
-    console.log(pokemon.data.data);
-    console.log(isModalOpen, isPokemonDetails);
   }
 
   if (!pokeName || !pokeImg || !pokeOrder) return <p>Loading...</p>;
