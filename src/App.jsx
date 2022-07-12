@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <QueryClientProvider client={queryClient}>
         <PokedexContainer />
-        <Modal />
+        <Modal key="pokemon-info-modal" />
       </QueryClientProvider>
     </div>
   );

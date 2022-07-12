@@ -107,7 +107,15 @@ export function PokedexContainer() {
       </div>
 
       <div className="load-more-container">
-        {searchInput !== '' ? null : (
+        {searchInput !== '' ? (
+          <button
+            type="button"
+            id="load-more-button"
+            onClick={() => setSearchInput('')}
+          >
+            Voltar
+          </button>
+        ) : (
           <button
             type="button"
             id="load-more-button"
