@@ -30,11 +30,21 @@ export function PokedexContainer() {
     {
       onSuccess: (response) => {
         setLoadedPokemons(response.results);
+        localStorage.setItem('pokemon-list', JSON.stringify(response.results));
+        localStorage.setItem('current-page', JSON.stringify(page));
       },
       keepPreviousData: true,
       refetchOnWindowFocus: false,
     },
   );
+
+  useEffect(() => {
+    const pokemonList = localStorage.getItem('pokemon-list');
+    const currentPage = localStorage.getItem('current-page');
+
+    setLoadedPokemons(JSON.parse(pokemonList));
+    setPage(JSON.parse(currentPage));
+  }, []);
 
   const pokemonsPerPage = useQueries(
     loadedPokemons?.map((pokemon, i) => ({
