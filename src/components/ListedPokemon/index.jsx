@@ -15,7 +15,7 @@ import {
 } from '../../features/modal/handleModal';
 import { LoadingPokeball } from '../LoadingPokeball';
 
-export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
+export function ListedPokemon({ pokeDetails }) {
   const dispatch = useDispatch();
 
   function handlePokemonProfile(element, pokemon) {
@@ -24,34 +24,33 @@ export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
     dispatch(handleModal());
   }
 
-  if (!pokeName || !pokeImg || !pokeOrder) return <LoadingPokeball />;
+  if (!pokeDetails) return <LoadingPokeball />;
 
   return (
     <div
       onClick={(el) => handlePokemonProfile(el, pokeDetails)}
       className="pokemon-list-container"
     >
-      <img src={pokeImg} alt={pokeName} height={200} width={200} />
+      <img
+        src={pokeDetails.sprites?.front_default}
+        alt={pokeDetails.name}
+        height={200}
+        width={200}
+      />
 
       <span>
         N°
-        {zeroLeft(pokeOrder)}
+        {zeroLeft(pokeDetails.order)}
       </span>
-      <span>{capitalizeFirstLetter(pokeName)}</span>
+      <span>{capitalizeFirstLetter(pokeDetails.name)}</span>
     </div>
   );
 }
 
 ListedPokemon.defaultProps = {
   pokeDetails: {},
-  pokeName: '',
-  pokeImg: '',
-  pokeOrder: 0,
 };
 
 ListedPokemon.propTypes = {
   pokeDetails: PropTypes.object,
-  pokeName: PropTypes.string,
-  pokeImg: PropTypes.string,
-  pokeOrder: PropTypes.number,
 };
