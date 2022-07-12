@@ -42,8 +42,6 @@ export function Modal() {
           <img
             src={pokemonDetails.sprites.front_default}
             alt={pokemonDetails.name}
-            height={350}
-            width={350}
           />
 
           <div className="modal-info">
