@@ -94,18 +94,12 @@ export function PokedexContainer() {
         {searchInput !== '' ? (
           <ListedPokemon
             pokeDetails={searchedPokemons}
-            pokeName={searchedPokemons?.name}
-            pokeOrder={searchedPokemons?.order}
-            pokeImg={searchedPokemons?.sprites?.front_default}
             key={searchedPokemons?.order}
           />
         ) : (
           pokemonsPerPage.map((pokemon, i) => (
             <ListedPokemon
               pokeDetails={pokemon?.data?.data}
-              pokeName={pokemon?.data?.data?.name}
-              pokeOrder={pokemon?.data?.data.order}
-              pokeImg={pokemon?.data?.data.sprites?.front_default}
               key={pokemon?.data?.data.name || i}
             />
           ))
