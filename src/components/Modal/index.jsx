@@ -58,7 +58,9 @@ export function Modal() {
             <div className="modal-types">
               <h3>Types:</h3>
               {pokemonDetails.types.map((item) => (
-                <span>{capitalizeFirstLetter(item.type.name)}</span>
+                <span className={item.type.name}>
+                  {capitalizeFirstLetter(item.type.name)}
+                </span>
               ))}
             </div>
             <div className="modal-dimensions">
