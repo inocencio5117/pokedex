@@ -75,9 +75,11 @@ export function PokedexContainer() {
 
   useEffect(() => {
     async function getData() {
-      const res = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${searchInput.trim()}`,
-      );
+      const res = await axios
+        .get(`https://pokeapi.co/api/v2/pokemon/${searchInput.trim()}`)
+        .catch((err) => {
+          if (err) setSearchedPokemons(null);
+        });
 
       setSearchedPokemons({ ...res.data });
     }
@@ -117,13 +119,6 @@ export function PokedexContainer() {
           <FaRandom />
           Surpreenda-me
         </button>
-        {/* 
-        <select name="" id="" defaultValue="">
-          <option value="" disabled hidden>
-            Organizar resultados por...
-          </option>
-          <option value="A-Z">A-Z</option>
-        </select> */}
       </div>
       <div className="pokemon-list">
         {searchInput !== '' ? (
