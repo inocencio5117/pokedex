@@ -13,6 +13,7 @@ import {
   handleModal,
   handlePokemonDetails,
 } from '../../features/modal/handleModal';
+import { LoadingPokeball } from '../LoadingPokeball';
 
 export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export function ListedPokemon({ pokeDetails, pokeName, pokeImg, pokeOrder }) {
     dispatch(handleModal());
   }
 
-  if (!pokeName || !pokeImg || !pokeOrder) return <p>Loading...</p>;
+  if (!pokeName || !pokeImg || !pokeOrder) return <LoadingPokeball />;
 
   return (
     <div

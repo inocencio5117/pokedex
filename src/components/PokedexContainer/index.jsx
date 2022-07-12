@@ -10,26 +10,27 @@ import { LoadingPokeball } from '../LoadingPokeball';
 import './styles.scss';
 
 export function PokedexContainer() {
-  const [page, setPage] = useState(
-    'https://pokeapi.co/api/v2/pokemon/?limit=20&offset=0',
-  );
+  const [page, setPage] = useState(20);
   const [loadedPokemons, setLoadedPokemons] = useState([]);
   const [searchInput, setSearchInput] = useState('');
   const [searchedPokemons, setSearchedPokemons] = useState({});
 
-  async function fetchPokemons({ queryKey }) {
-    const response = await axios.get(queryKey[1]);
+  async function fetchPokemons(currentPage = 20) {
+    const response = await axios.get(
+      `https://pokeapi.co/api/v2/pokemon/?limit=${currentPage}&offset=0`,
+    );
     return response.data;
   }
 
-  const { data, isLoading, isFetching, status } = useQuery(
+  const { data, isLoading } = useQuery(
     ['pokemon-list', page],
-    fetchPokemons,
+    () => fetchPokemons(page),
     {
       onSuccess: (response) => {
-        setLoadedPokemons(loadedPokemons.concat(response.results));
+        setLoadedPokemons(response.results);
       },
       keepPreviousData: true,
+      refetchOnWindowFocus: false,
     },
   );
 
@@ -42,6 +43,7 @@ export function PokedexContainer() {
         return response;
       },
       keepPreviousData: true,
+      refetchOnWindowFocus: false,
     })),
   );
 
@@ -57,8 +59,6 @@ export function PokedexContainer() {
       );
 
       setSearchedPokemons({ ...res.data });
-      console.log(res.data);
-      console.log(searchedPokemons.name, 'pikachu deveria estar auqi');
     }
 
     getData();
@@ -66,15 +66,12 @@ export function PokedexContainer() {
 
   function handleLoadMore(element) {
     element.preventDefault();
-    setPage(data?.next);
-  }
-
-  if (isLoading || isFetching || status === 'loading') {
-    return <LoadingPokeball />;
+    setPage((old) => old + 20);
   }
 
   return (
     <div className="pokedex-container">
+      {isLoading ?? <LoadingPokeball />}
       <h1 className="pokedex-title">Pokedex</h1>
       <div className="search">
         <input type="text" placeholder="Id ou nome do pokemon" id="search" />
