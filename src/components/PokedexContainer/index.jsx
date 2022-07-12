@@ -49,9 +49,28 @@ export function PokedexContainer() {
     })),
   );
 
+  function handleLoadMore(element) {
+    element.preventDefault();
+    setPage((old) => old + 20);
+  }
+
   function handleSearch(element) {
     element.preventDefault();
     setSearchInput(document.querySelector('#search-box').value);
+  }
+
+  function handleSurpriseMe(element) {
+    element.preventDefault();
+    const randomPokemon =
+      pokemonsPerPage[Math.floor(Math.random() * pokemonsPerPage.length)];
+    console.log(randomPokemon);
+    setSearchInput(randomPokemon.data.data.name);
+  }
+
+  function handleKeyPress(evt) {
+    if (evt.keyCode === 13) {
+      handleSearch(evt);
+    }
   }
 
   useEffect(() => {
@@ -66,11 +85,6 @@ export function PokedexContainer() {
     getData();
   }, [searchInput]);
 
-  function handleLoadMore(element) {
-    element.preventDefault();
-    setPage((old) => old + 20);
-  }
-
   return (
     <div className="pokedex-container">
       {isLoading ?? <LoadingPokeball />}
@@ -84,6 +98,7 @@ export function PokedexContainer() {
             type="text"
             placeholder="Id ou nome do pokemon"
             id="search-box"
+            onKeyDown={handleKeyPress}
           />
           <button
             type="button"
@@ -94,17 +109,21 @@ export function PokedexContainer() {
           </button>
         </div>
 
-        <button type="button" className="surprise-button">
+        <button
+          type="button"
+          className="surprise-button"
+          onClick={handleSurpriseMe}
+        >
           <FaRandom />
           Surpreenda-me
         </button>
-
+        {/* 
         <select name="" id="" defaultValue="">
           <option value="" disabled hidden>
             Organizar resultados por...
           </option>
           <option value="A-Z">A-Z</option>
-        </select>
+        </select> */}
       </div>
       <div className="pokemon-list">
         {searchInput !== '' ? (
