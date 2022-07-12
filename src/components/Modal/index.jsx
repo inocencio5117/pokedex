@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 import './styles.scss';
 import { useSelector, useDispatch } from 'react-redux';
@@ -41,31 +42,37 @@ export function Modal() {
           <img
             src={pokemonDetails.sprites.front_default}
             alt={pokemonDetails.name}
-            height={250}
-            width={250}
+            height={350}
+            width={350}
           />
 
-          <div className="modal-types">
-            {pokemonDetails.types.map((item) => (
-              <span>{item.type.name}</span>
-            ))}
-          </div>
-
-          <div className="modal-stats">
-            <span>
-              Height:
-              {pokemonDetails.height}
-            </span>
-            <span>
-              Weight
-              {pokemonDetails.weight}
-            </span>
-            {pokemonDetails.stats.map((item) => (
-              <span>
-                {item.stat.name}
-                {item.base_stat}
-              </span>
-            ))}
+          <div className="modal-info">
+            <div className="modal-stats">
+              {pokemonDetails.stats.map((item) => (
+                <div>
+                  <span className="stat-name">
+                    {capitalizeFirstLetter(item.stat.name)}:
+                  </span>
+                  <span className="stat-value">{item.base_stat}</span>
+                </div>
+              ))}
+            </div>
+            <div className="modal-types">
+              <h3>Types:</h3>
+              {pokemonDetails.types.map((item) => (
+                <span>{capitalizeFirstLetter(item.type.name)}</span>
+              ))}
+            </div>
+            <div className="modal-dimensions">
+              <div>
+                <span>Weight:</span>
+                {pokemonDetails.height.toString().concat('0')} cm
+              </div>
+              <div>
+                <span>Height:</span>
+                {pokemonDetails.weight.toString().concat('0')} g
+              </div>
+            </div>
           </div>
         </div>
       </div>

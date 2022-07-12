@@ -9,18 +9,19 @@
 
 .modal-container {
   position: absolute;
-  top: 6rem;
-  left: 6rem;
-  right: 6rem;
-  bottom: 6rem;
-  border: 1px solid #ccc;
-  background: #fff;
+  top: 4rem;
+  left: 4rem;
+  right: 4rem;
+  bottom: 4rem;
+  border: none;
+  background: #374151;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 1.4rem 1rem;
 
+  text-align: center;
   font-size: 1.25rem;
   font-weight: 600;
   color: black;
@@ -33,18 +34,101 @@
     right: 1rem;
     margin: 0.25rem 1rem;
     text-transform: uppercase;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
-  .modal-types {
-    display: flex;
-    justify-content: center;
+  .modal-header {
+    color: #fff;
+  }
 
-    > span {
-      border: 1px solid #000;
-      border-radius: 0.5rem;
-      padding: 0.25rem;
-      margin: 0rem 0.25rem;
+  .modal-body {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    grid-gap: 1rem;
+
+    color: #fff;
+
+    margin: 2rem 1rem;
+    height: 80%;
+
+    img,
+    .modal-body,
+    .modal-info {
+      height: 80%;
+    }
+
+    > img {
+      background: #ccc;
+      border-radius: 1rem;
+      width: 100%;
+      height: 100%;
+    }
+
+    .modal-info {
+      text-align: left;
+      font-size: 1.5rem;
+      background-color: #ccc;
+      padding: 0.75rem;
+      border-radius: 1rem;
+
+      width: 100%;
+      height: 100%;
+
+      .modal-stats {
+        > div {
+          display: flex;
+          justify-content: space-between;
+
+          > span {
+            color: #fff;
+            background-color: #788898;
+            width: 50%;
+            padding: 1rem;
+          }
+
+          &:nth-child(odd) {
+            span ~ span {
+              background-color: #c8d0d8;
+            }
+          }
+
+          &:nth-child(even) {
+            .stat-name {
+              background-color: #8898a8;
+            }
+          }
+
+          .stat-value {
+            background-color: #dbdbdb;
+            color: #000;
+            text-align: end;
+          }
+        }
+      }
+
+      .modal-types {
+        display: flex;
+        place-items: center;
+
+        margin: 1.25rem 0;
+        color: #000;
+
+        > span {
+          border: 1px solid #000;
+          border-radius: 0.75rem;
+          padding: 0.5rem;
+          margin-left: 1rem;
+        }
+      }
+
+      .modal-dimensions {
+        color: #000;
+
+        div > span {
+          margin-right: 1rem;
+        }
+      }
     }
   }
 }
