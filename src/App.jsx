@@ -5,7 +5,6 @@ import { PokedexContainer } from './components/PokedexContainer';
 import { Modal } from './components/Modal';
 
 import './styles/global.scss';
-import './App.scss';
 
 const queryClient = new QueryClient();
 

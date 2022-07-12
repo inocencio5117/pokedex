@@ -5,6 +5,8 @@ import { useQueries, useQuery } from 'react-query';
 import axios from 'axios';
 
 import { FaRandom } from 'react-icons/fa';
+import { GoSearch } from 'react-icons/go';
+import { TbPokeball } from 'react-icons/tb';
 import { ListedPokemon } from '../ListedPokemon';
 import { LoadingPokeball } from '../LoadingPokeball';
 import './styles.scss';
@@ -49,13 +51,13 @@ export function PokedexContainer() {
 
   function handleSearch(element) {
     element.preventDefault();
-    setSearchInput(document.querySelector('#search').value);
+    setSearchInput(document.querySelector('#search-box').value);
   }
 
   useEffect(() => {
     async function getData() {
       const res = await axios.get(
-        `https://pokeapi.co/api/v2/pokemon/${searchInput}`,
+        `https://pokeapi.co/api/v2/pokemon/${searchInput.trim()}`,
       );
 
       setSearchedPokemons({ ...res.data });
@@ -72,12 +74,26 @@ export function PokedexContainer() {
   return (
     <div className="pokedex-container">
       {isLoading ?? <LoadingPokeball />}
+      <div className="pokeball-title-container">
+        <TbPokeball color="white" className="pokeball-title" />
+      </div>
       <h1 className="pokedex-title">Pokedex</h1>
       <div className="search">
-        <input type="text" placeholder="Id ou nome do pokemon" id="search" />
-        <button type="button" className="" onClick={handleSearch}>
-          Search
-        </button>
+        <div className="search-box-container">
+          <input
+            type="text"
+            placeholder="Id ou nome do pokemon"
+            id="search-box"
+          />
+          <button
+            type="button"
+            className="search-button"
+            onClick={handleSearch}
+          >
+            <GoSearch color="#fff" />
+          </button>
+        </div>
+
         <button type="button" className="surprise-button">
           <FaRandom />
           Surpreenda-me
@@ -110,7 +126,7 @@ export function PokedexContainer() {
         {searchInput !== '' ? (
           <button
             type="button"
-            id="load-more-button"
+            id="go-back-button"
             onClick={() => setSearchInput('')}
           >
             Voltar

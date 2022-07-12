@@ -1,5 +1,7 @@
 .pokedex-container {
-  background-color: rgba(59, 130, 246, 0.5);
+  background: rgba(255, 255, 255, 0.1)
+    url(https://assets.pokemon.com/static2/_ui/img/chrome/body_bg.png) center
+    center / cover no-repeat fixed;
   color: #000;
 
   margin: 3rem auto;
@@ -11,9 +13,32 @@
 
   border-radius: 1rem;
 
+  .pokeball-title-container {
+    display: flex;
+    place-items: center;
+    width: 100%;
+
+    .pokeball-title {
+      height: 3.5rem;
+      width: 3.5rem;
+      align-self: center;
+      text-align: center;
+      margin: 1rem auto;
+    }
+  }
+
+  .pokedex-title {
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5rem;
+    text-align: center;
+    align-self: center;
+  }
+
   .surprise-button,
-  #load-more-button {
-    background-color: navy;
+  #load-more-button,
+  #go-back-button {
+    background-color: #30a7d7;
     color: #fff;
     font-size: 1.2em;
     padding: 0.75rem 0.5rem;
@@ -24,9 +49,20 @@
     justify-content: center;
     align-items: center;
 
+    transition: all 300ms ease-in-out;
+
     > svg {
       margin-right: 1rem;
     }
+
+    &:hover {
+      filter: brightness(80%);
+    }
+  }
+
+  #load-more-button,
+  #go-back-button {
+    margin: 1rem 0;
   }
 
   .load-more-container {
@@ -39,6 +75,29 @@
     justify-content: space-evenly;
     align-items: center;
     margin: 2rem 0rem 3rem;
+
+    .search-box-container {
+      #search-box {
+        padding: 0.5rem;
+        border-radius: 1rem;
+        border: 1px solid #ccc;
+        margin-right: 0.5rem;
+      }
+
+      .search-button {
+        font-weight: 900;
+        background: #ee6b2f;
+        padding: 0.5rem;
+        border: none;
+        border-radius: 0.35rem;
+
+        transition: all 250ms ease-in;
+
+        &:hover {
+          filter: brightness(80%);
+        }
+      }
+    }
 
     > select {
       color: #fff;
@@ -57,6 +116,14 @@
     display: flex;
     flex-direction: column;
 
+    .surprise-button,
+    #load-more-button,
+    #go-back-button,
+    .search-box-container {
+      width: 17rem;
+      margin: 0.5rem 0;
+    }
+
     .search {
       flex-direction: column;
 
@@ -69,8 +136,7 @@
   .pokemon-list {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    justify-items: center;
-    align-items: center;
+    place-items: center;
 
     width: 100%;
 
