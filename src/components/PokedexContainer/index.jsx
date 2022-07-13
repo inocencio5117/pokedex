@@ -138,7 +138,7 @@ export function PokedexContainer() {
             key={searchedPokemons?.order}
           />
         ) : (
-          pokemonsPerPage.map((pokemon, i) => (
+          pokemonsPerPage?.map((pokemon, i) => (
             <ListedPokemon
               pokeDetails={pokemon?.data?.data}
               key={pokemon?.data?.data?.name || i}

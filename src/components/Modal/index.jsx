@@ -46,7 +46,7 @@ export function Modal() {
 
           <div className="modal-info">
             <div className="modal-stats">
-              {pokemonDetails.stats.map((item) => (
+              {pokemonDetails?.stats?.map((item) => (
                 <div>
                   <span className="stat-name">
                     {capitalizeFirstLetter(item.stat.name)}:
@@ -57,7 +57,7 @@ export function Modal() {
             </div>
             <div className="modal-types">
               <h3>Types:</h3>
-              {pokemonDetails.types.map((item) => (
+              {pokemonDetails?.types?.map((item) => (
                 <span className={item.type.name}>
                   {capitalizeFirstLetter(item.type.name)}
                 </span>
