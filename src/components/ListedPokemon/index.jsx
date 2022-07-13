@@ -32,7 +32,10 @@ export function ListedPokemon({ pokeDetails }) {
       className="pokemon-list-container"
     >
       <img
-        src={pokeDetails.sprites?.front_default}
+        src={
+          pokeDetails.sprites?.versions?.['generation-v']?.['black-white']
+            ?.animated?.front_default || pokeDetails?.sprites?.front_default
+        }
         alt={pokeDetails.name}
         height={200}
         width={200}
