@@ -153,3 +153,21 @@
     }
   }
 }
+
+.arrow-up {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  margin: 1rem 2rem;
+
+  transition: all 300ms ease-in-out;
+
+  > svg {
+    height: 4rem;
+    width: 4rem;
+  }
+
+  &:hover {
+    transform: scale(1.1);
+  }
+}

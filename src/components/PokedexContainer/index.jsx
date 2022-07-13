@@ -7,6 +7,7 @@ import axios from 'axios';
 import { FaRandom } from 'react-icons/fa';
 import { GoSearch } from 'react-icons/go';
 import { TbPokeball } from 'react-icons/tb';
+import { IoIosArrowDropupCircle } from 'react-icons/io';
 import { ListedPokemon } from '../ListedPokemon';
 import { LoadingPokeball } from '../LoadingPokeball';
 import './styles.scss';
@@ -30,7 +31,7 @@ export function PokedexContainer() {
     {
       onSuccess: (response) => {
         setLoadedPokemons(response.results);
-        localStorage.setItem('pokemon-list', JSON.stringify(response.results));
+        localStorage.setItem('pokemon-list', JSON.stringify(response?.results));
         localStorage.setItem('current-page', JSON.stringify(page));
       },
       keepPreviousData: true,
@@ -74,7 +75,7 @@ export function PokedexContainer() {
     const randomPokemon =
       pokemonsPerPage[Math.floor(Math.random() * pokemonsPerPage.length)];
     console.log(randomPokemon);
-    setSearchInput(randomPokemon.data.data.name);
+    setSearchInput(randomPokemon?.data?.data?.name);
   }
 
   function handleKeyPress(evt) {
@@ -91,19 +92,19 @@ export function PokedexContainer() {
           if (err) setSearchedPokemons(null);
         });
 
-      setSearchedPokemons({ ...res.data });
+      setSearchedPokemons({ ...res?.data });
     }
 
     getData();
   }, [searchInput]);
 
   return (
-    <div className="pokedex-container">
+    <div className="pokedex-container" id="top">
       {isLoading ?? <LoadingPokeball />}
       <div className="pokeball-title-container">
         <TbPokeball color="white" className="pokeball-title" />
       </div>
-      <h1 className="pokedex-title">Pokedex</h1>
+      <h1 className="pokedex-title">Pokédex</h1>
       <div className="search">
         <div className="search-box-container">
           <input
@@ -140,7 +141,7 @@ export function PokedexContainer() {
           pokemonsPerPage.map((pokemon, i) => (
             <ListedPokemon
               pokeDetails={pokemon?.data?.data}
-              key={pokemon?.data?.data.name || i}
+              key={pokemon?.data?.data?.name || i}
             />
           ))
         )}
@@ -166,6 +167,10 @@ export function PokedexContainer() {
           </button>
         )}
       </div>
+
+      <a className="arrow-up" href="#top">
+        <IoIosArrowDropupCircle />
+      </a>
     </div>
   );
 }
