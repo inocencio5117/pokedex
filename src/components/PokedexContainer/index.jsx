@@ -43,8 +43,10 @@ export function PokedexContainer() {
     const pokemonList = localStorage.getItem('pokemon-list');
     const currentPage = localStorage.getItem('current-page');
 
-    setLoadedPokemons(JSON.parse(pokemonList));
-    setPage(JSON.parse(currentPage));
+    if (pokemonList && currentPage) {
+      setLoadedPokemons(JSON.parse(pokemonList));
+      setPage(JSON.parse(currentPage));
+    }
   }, []);
 
   const pokemonsPerPage = useQueries(
